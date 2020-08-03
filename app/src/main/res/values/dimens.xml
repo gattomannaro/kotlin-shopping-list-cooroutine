@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="toolbarTitle">20sp</dimen>
+    <dimen name="paddingTop">20dp</dimen>
+    <dimen name="paddingEdge">10dp</dimen>
 </resources>

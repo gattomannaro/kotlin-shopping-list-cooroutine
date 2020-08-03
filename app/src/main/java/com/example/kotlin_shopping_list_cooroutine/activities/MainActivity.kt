@@ -43,7 +43,8 @@ class MainActivity : AppCompatActivity(), IMainActivity {
             navController!!.navInflater.inflate(R.navigation.navigation_graph)
 
         appBarConfiguration = AppBarConfiguration.Builder(
-            R.id.splashFragment
+            R.id.splashFragment,
+            R.id.shoppingListDashboardFragment
         ).build()
 
         navController?.let{

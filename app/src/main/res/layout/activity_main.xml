@@ -10,11 +10,13 @@
         android:id="@+id/navToolbar"
         android:layout_width="0dp"
         android:layout_height="60dp"
+        android:background="@color/toolbarColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:textColor="@color/white"
             android:id="@+id/toolbarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
