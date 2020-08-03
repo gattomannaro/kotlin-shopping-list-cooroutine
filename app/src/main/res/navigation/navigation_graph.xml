@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/splashFragment"
+    >
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.kotlin_shopping_list_cooroutine.ui.splashFragment.SplashFragment">
+
+        <action android:id="@+id/splashFragment_to_shoppingListDashboardFragment"
+            app:destination="@+id/shoppingListDashboardFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"
+            />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/shoppingListDashboardFragment"
+        android:name="com.example.kotlin_shopping_list_cooroutine.ui.shoppingListFragment.ShoppingListDashboardFragment">
+
+    </fragment>
 
 </navigation>
