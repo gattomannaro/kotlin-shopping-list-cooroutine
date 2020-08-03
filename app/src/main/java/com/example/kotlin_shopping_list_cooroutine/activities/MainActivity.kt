@@ -11,6 +11,7 @@ import com.example.kotlin_shopping_list_cooroutine.R
 import com.example.kotlin_shopping_list_cooroutine.di.AppModule
 import com.example.kotlin_shopping_list_cooroutine.di.RepoModule
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity(), IMainActivity {
 
         startKoin {
             androidLogger()
+            androidContext(this@MainActivity)
             modules(listOf(AppModule, RepoModule))
         }
     }
@@ -49,7 +51,11 @@ class MainActivity : AppCompatActivity(), IMainActivity {
         }
     }
 
-    override fun setToolbarTItle(text: String) {
+    override fun setToolbarTitle(text: String) {
         toolbarTitle.text = text
+    }
+
+    override fun setToolbarVisibility(visibility: Int) {
+        navToolbar.visibility = visibility
     }
 }

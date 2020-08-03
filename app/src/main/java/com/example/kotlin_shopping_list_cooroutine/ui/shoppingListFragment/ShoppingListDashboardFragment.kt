@@ -13,7 +13,7 @@ class ShoppingListDashboardFragment: BaseFragment<ShoppingListDashboardViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ShoppingListDashboardViewModel::class.java)
+        viewModel = ViewModelProvider(this, ShoppingListDashboardFactory()).get(ShoppingListDashboardViewModel::class.java)
     }
 
     override fun onCreateView(
