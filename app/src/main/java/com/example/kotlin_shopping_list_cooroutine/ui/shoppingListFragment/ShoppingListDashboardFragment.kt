@@ -7,21 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_shopping_list_cooroutine.R
+import com.example.kotlin_shopping_list_cooroutine.data.model.ListModel
 import com.example.kotlin_shopping_list_cooroutine.ext.disable
 import com.example.kotlin_shopping_list_cooroutine.ext.enable
 import com.example.kotlin_shopping_list_cooroutine.ui.BaseFragment
 import kotlinx.android.synthetic.main.fragment_shopping_dashboard.*
+import java.util.*
 
+@ExperimentalStdlibApi
 class ShoppingListDashboardFragment :
     BaseFragment<ShoppingListDashboardViewModel, ShoppingListDashboardFactory>(
         ShoppingListDashboardFactory(),
         ShoppingListDashboardViewModel::class.java
-    ) {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    ), ShoppingDashboardAdapterListener {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,14 +34,18 @@ class ShoppingListDashboardFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel?.shoppingLists?.observe(viewLifecycleOwner, Observer {
-            print(it.toString())
+        viewModel?.getLists()?.observe(viewLifecycleOwner, Observer {
+            viewModel?.list = it.map { item -> ListModel(UUID.fromString(item.id), item.listName) }
+            shoppingListDashRcv.apply {
+                adapter = ShoppingDashboardAdapter(viewModel!!.list, requireContext(), this@ShoppingListDashboardFragment)
+                layoutManager = LinearLayoutManager(requireContext())
+            }
         })
 
         shoppingListDashBtnCreate.disable()
         shoppingListDashNewNameEdt.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                if (p0.toString().isBlank())
+                if (p0.toString().isBlank() || viewModel?.isValidName(p0.toString())  == false )
                     shoppingListDashBtnCreate.disable()
                 else
                     shoppingListDashBtnCreate.enable()
@@ -57,7 +61,12 @@ class ShoppingListDashboardFragment :
         })
 
         shoppingListDashBtnCreate.setOnClickListener {
-            viewModel?.createList(shoppingListDashNewNameEdt.text.toString())
+            viewModel?.createList(shoppingListDashNewNameEdt.text.toString().capitalize(Locale.ROOT))
+            shoppingListDashNewNameEdt.setText("")
+        }
+
+        shoppingListDashDeleteAll.setOnClickListener {
+            viewModel?.deleteAll()
         }
     }
 
@@ -65,6 +74,10 @@ class ShoppingListDashboardFragment :
         super.onActivityCreated(savedInstanceState)
         setToolbarVisibility(View.VISIBLE)
         setToolbarTitle(getString(R.string.ShoppingListDashboardFragment_title))
+    }
+
+    override fun delete(id: UUID) {
+        viewModel?.delete(id)
     }
 
 }

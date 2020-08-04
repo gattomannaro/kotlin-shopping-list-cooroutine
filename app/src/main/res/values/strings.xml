@@ -3,4 +3,5 @@
     <string name="splashTitle">Splash</string>
     <string name="ShoppingListDashboardFragment_title">Liste</string>
     <string name="list_name">Nome Lista</string>
+    <string name="delete_all">Elimina tutti</string>
 </resources>

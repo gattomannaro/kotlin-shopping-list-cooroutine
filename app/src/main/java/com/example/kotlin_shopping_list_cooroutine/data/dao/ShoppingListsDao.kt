@@ -1,5 +1,6 @@
 package com.example.kotlin_shopping_list_cooroutine.data.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -11,5 +12,8 @@ interface ShoppingListsDao {
     suspend fun insertList(list: ShoppingListsEntity)
 
     @Query("SELECT * FROM ShoppingListsEntity")
-    suspend fun getAllList(): List<ShoppingListsEntity>
+    fun getAllList(): LiveData<List<ShoppingListsEntity>>
+
+    @Query("DELETE FROM ShoppingListsEntity WHERE id = :id")
+    suspend fun delete(id: String)
 }
