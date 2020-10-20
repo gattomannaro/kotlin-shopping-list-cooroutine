@@ -41,12 +41,16 @@ class ShoppingListDashboardViewModel(
 
     fun delete(id: UUID) {
         viewModelScope.launch(Dispatchers.IO) {
+            val l = list.value?.toMutableList()
             shoppingDashboardRepository.delete(id)
+            l?.removeIf { it.id == id }
+            list.postValue(l)
         }
     }
 
     fun deleteAll() {
         viewModelScope.launch(Dispatchers.IO) {
+            list.postValue(listOf())
             shoppingDashboardRepository.deleteAll()
         }
     }
