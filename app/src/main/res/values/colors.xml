@@ -9,4 +9,5 @@
     <color name="text_hint">#33FFFFFF</color>
     <color name="green">#4CAF50</color>
     <color name="black">#000000</color>
+    <color name="black30">#30000000</color>
 </resources>

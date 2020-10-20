@@ -9,11 +9,14 @@
     android:paddingEnd="@dimen/paddingEdge">
 
     <EditText
+        android:autofillHints="@string/list_name"
+        android:hint="@string/list_name"
         android:id="@+id/shoppingListDashNewNameEdt"
         style="@style/EditTextStyle"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:hint="@string/list_name"
+        android:inputType="text"
+        android:textColorHint="@color/black"
         app:layout_constraintBottom_toBottomOf="@id/shoppingListDashBtnCreate"
         app:layout_constraintEnd_toStartOf="@id/shoppingListDashBtnCreate"
         app:layout_constraintStart_toStartOf="parent"

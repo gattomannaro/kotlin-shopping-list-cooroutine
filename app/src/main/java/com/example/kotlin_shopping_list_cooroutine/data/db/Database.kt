@@ -23,13 +23,13 @@ abstract class Database : RoomDatabase() {
         @JvmField
         val MIGRATION_0_1: Migration = object : Migration(0, 1) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                //Migration tecnica per far si che Room setti il DB pre popolato come un DB room
+                //technical migration
             }
         }
 
         val MIGRATION_1_2: Migration = object : Migration(1,2) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                //Migration tecnica per far si che Room setti il DB pre popolato come un DB room
+                //technical migration
             }
         }
     }

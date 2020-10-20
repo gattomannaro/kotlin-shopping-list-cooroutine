@@ -7,4 +7,10 @@
     <string name="list_item_title">List dei prodotti</string>
     <string name="list_products">List prodotti</string>
     <string name="seasonal">Stagionali</string>
+
+    <string name="items_name">Nome elemento</string>
+    <string name="delete_all_title">Vuoi cancellare tutto?</string>
+    <string name="delete_all_message">Confermi di voler eliminare tutto?</string>
+    <string name="confirm">Conferma</string>
+    <string name="cancel">Annulla</string>
 </resources>

@@ -14,7 +14,7 @@ class ShoppingListDashboardViewModel(
     private val shoppingDashboardRepository: ShoppingDashboardRepository
 ): ViewModel() {
 
-    var list: MutableLiveData<List<ListModel>> = MutableLiveData()
+    var list: MutableLiveData<MutableList<ListModel>> = MutableLiveData()
     fun getLists(){
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -27,12 +27,12 @@ class ShoppingListDashboardViewModel(
     }
 
     fun createList(listName: String) {
+        val l = list.value
+        val model = ListModel(listName = listName)
+        l?.add(model)
+        list.value = l
         viewModelScope.launch(Dispatchers.IO) {
-            val l = list.value?.toMutableList()
-            val model = ListModel(listName = listName)
             shoppingDashboardRepository.createList(model.toEntity())
-            l?.add(model)
-            list.postValue(l)
         }
     }
 
@@ -40,17 +40,15 @@ class ShoppingListDashboardViewModel(
         Locale.getDefault())} == null
 
     fun delete(id: UUID) {
+        list.value?.removeIf { it.id == id }
         viewModelScope.launch(Dispatchers.IO) {
-            val l = list.value?.toMutableList()
             shoppingDashboardRepository.delete(id)
-            l?.removeIf { it.id == id }
-            list.postValue(l)
         }
     }
 
     fun deleteAll() {
+        list.value = mutableListOf()
         viewModelScope.launch(Dispatchers.IO) {
-            list.postValue(listOf())
             shoppingDashboardRepository.deleteAll()
         }
     }

@@ -31,6 +31,9 @@ class ShoppingDashboardAdapter(
             listener.delete(item.id)
             notifyDataSetChanged()
         }
+        holder.itemView.setOnClickListener {
+            listener.onItemClick(item.id)
+        }
     }
 
 
