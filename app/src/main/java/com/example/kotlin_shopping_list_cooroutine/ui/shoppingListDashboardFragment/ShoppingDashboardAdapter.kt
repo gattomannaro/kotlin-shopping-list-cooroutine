@@ -1,4 +1,4 @@
-package com.example.kotlin_shopping_list_cooroutine.ui.shoppingListFragment
+package com.example.kotlin_shopping_list_cooroutine.ui.shoppingListDashboardFragment
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import com.example.kotlin_shopping_list_cooroutine.data.model.ListModel
 import kotlinx.android.synthetic.main.adapter_dashboard_item.view.*
 
 class ShoppingDashboardAdapter(
-    private val items: List<ListModel>,
+    private val items: MutableList<ListModel>,
     private val context: Context,
     private val listener: ShoppingDashboardAdapterListener
 ): RecyclerView.Adapter<ShoppingDashboardAdapter.ShoppingDashboardVIewHolder>() {
@@ -27,7 +27,9 @@ class ShoppingDashboardAdapter(
         val item = items[position]
         holder.itemView.dashboardAdapterName.text = item.listName
         holder.itemView.dashboardAdapterBtn.setOnClickListener {
+            items.removeAt(position)
             listener.delete(item.id)
+            notifyDataSetChanged()
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.kotlin_shopping_list_cooroutine.ui.shoppingListFragment
+package com.example.kotlin_shopping_list_cooroutine.ui.shoppingListDashboardFragment
 
 import android.os.Bundle
 import android.text.Editable
@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_shopping_list_cooroutine.R
@@ -13,6 +14,7 @@ import com.example.kotlin_shopping_list_cooroutine.data.model.ListModel
 import com.example.kotlin_shopping_list_cooroutine.ext.disable
 import com.example.kotlin_shopping_list_cooroutine.ext.enable
 import com.example.kotlin_shopping_list_cooroutine.ui.BaseFragment
+import com.example.kotlin_shopping_list_cooroutine.ui.shoppingList.ShoppingListFragment.Companion.ID_KEY
 import kotlinx.android.synthetic.main.fragment_shopping_dashboard.*
 import java.util.*
 
@@ -34,13 +36,7 @@ class ShoppingListDashboardFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel?.getLists()?.observe(viewLifecycleOwner, Observer {
-            viewModel?.list = it.map { item -> ListModel(UUID.fromString(item.id), item.listName) }
-            shoppingListDashRcv.apply {
-                adapter = ShoppingDashboardAdapter(viewModel!!.list, requireContext(), this@ShoppingListDashboardFragment)
-                layoutManager = LinearLayoutManager(requireContext())
-            }
-        })
+        viewModel?.getLists()
 
         shoppingListDashBtnCreate.disable()
         shoppingListDashNewNameEdt.addTextChangedListener(object : TextWatcher {
@@ -68,6 +64,8 @@ class ShoppingListDashboardFragment :
         shoppingListDashDeleteAll.setOnClickListener {
             viewModel?.deleteAll()
         }
+
+        attachObserver()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -80,4 +78,17 @@ class ShoppingListDashboardFragment :
         viewModel?.delete(id)
     }
 
+    override fun onItemClick(id: UUID) {
+        val b = bundleOf()
+        b.putString(ID_KEY, id.toString())
+        navController.navigate(R.id.shoppingListDashboardFragment_to_shoppingListFragment, b)
+    }
+
+    private fun attachObserver() {
+        viewModel?.list?.observe(viewLifecycleOwner,  {
+            shoppingListDashRcv.apply {
+                adapter = ShoppingDashboardAdapter(it.toMutableList(), requireContext(), this@ShoppingListDashboardFragment)
+                layoutManager = LinearLayoutManager(requireContext())
+            }})
+    }
 }

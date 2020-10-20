@@ -4,4 +4,7 @@
     <string name="ShoppingListDashboardFragment_title">Liste</string>
     <string name="list_name">Nome Lista</string>
     <string name="delete_all">Elimina tutti</string>
+    <string name="list_item_title">List dei prodotti</string>
+    <string name="list_products">List prodotti</string>
+    <string name="seasonal">Stagionali</string>
 </resources>

@@ -20,8 +20,14 @@
 
     <fragment
         android:id="@+id/shoppingListDashboardFragment"
-        android:name="com.example.kotlin_shopping_list_cooroutine.ui.shoppingListFragment.ShoppingListDashboardFragment">
-
+        android:name="com.example.kotlin_shopping_list_cooroutine.ui.shoppingListDashboardFragment.ShoppingListDashboardFragment">
+        <action
+            android:id="@+id/shoppingListDashboardFragment_to_shoppingListFragment"
+            app:destination="@+id/shoppingListFragment"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/shoppingListFragment"
+        android:name="com.example.kotlin_shopping_list_cooroutine.ui.shoppingList.ShoppingListFragment"/>
 
 </navigation>

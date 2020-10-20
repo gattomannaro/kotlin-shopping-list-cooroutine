@@ -7,12 +7,12 @@ import androidx.room.Query
 import com.example.kotlin_shopping_list_cooroutine.data.entity.ShoppingListsEntity
 
 @Dao
-interface ShoppingListsDao {
+interface ShoppingListsDashboardDao {
     @Insert
     suspend fun insertList(list: ShoppingListsEntity)
 
     @Query("SELECT * FROM ShoppingListsEntity")
-    fun getAllList(): LiveData<List<ShoppingListsEntity>>
+    suspend fun getAllList(): List<ShoppingListsEntity>
 
     @Query("DELETE FROM ShoppingListsEntity WHERE id = :id")
     suspend fun delete(id: String)
