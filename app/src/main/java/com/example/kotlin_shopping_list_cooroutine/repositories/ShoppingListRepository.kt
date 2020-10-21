@@ -20,7 +20,7 @@ class ShoppingListRepository(
         db.shoppingListItemDao().delete(id.toString())
     }
 
-    suspend fun deleteAll() {
-        db.shoppingListItemDao().deleteAll()
+    suspend fun deleteAll(listId: String) {
+        db.shoppingListItemDao().deleteAll(listId)
     }
 }

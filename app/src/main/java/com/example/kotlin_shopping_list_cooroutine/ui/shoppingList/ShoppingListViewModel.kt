@@ -57,7 +57,7 @@ class ShoppingListViewModel(
     fun deleteAll() {
         items.value = mutableListOf()
         viewModelScope.launch(Dispatchers.IO) {
-            shoppingListRepository.deleteAll()
+            shoppingListRepository.deleteAll(listId?:"")
         }
     }
 }
