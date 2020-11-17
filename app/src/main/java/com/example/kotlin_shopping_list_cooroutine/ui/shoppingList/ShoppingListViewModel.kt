@@ -83,4 +83,14 @@ class ShoppingListViewModel(
             }
         }
     }
+
+    fun getListString(): String {
+        return items.value?.let{
+            it.fold("", { acc, listItem ->
+            acc + "${listItem.name}\n"
+        })
+        }?:run{
+            ""
+        }
+    }
 }

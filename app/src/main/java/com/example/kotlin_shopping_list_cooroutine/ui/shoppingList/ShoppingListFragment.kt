@@ -1,12 +1,15 @@
 package com.example.kotlin_shopping_list_cooroutine.ui.shoppingList
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_shopping_list_cooroutine.R
 import com.example.kotlin_shopping_list_cooroutine.ext.disable
@@ -17,8 +20,12 @@ import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_shopping_list_item.*
 import java.util.*
 
+
 class ShoppingListFragment:
-    BaseFragment<ShoppingListViewModel, ShoppingListFactory>(ShoppingListFactory(), ShoppingListViewModel::class.java), ItemsListener, VegetablesListener {
+    BaseFragment<ShoppingListViewModel, ShoppingListFactory>(
+        ShoppingListFactory(),
+        ShoppingListViewModel::class.java
+    ), ItemsListener, VegetablesListener {
 
     companion object {
         const val ID_KEY ="ID"
@@ -30,7 +37,7 @@ class ShoppingListFragment:
         savedInstanceState: Bundle?
     ): View? {
         arguments?.let{
-            viewModel?.listId = it.getString(ID_KEY,"")
+            viewModel?.listId = it.getString(ID_KEY, "")
         }
         viewModel?.listId?.let{
             viewModel?.getElements(it)
@@ -41,16 +48,16 @@ class ShoppingListFragment:
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        shoppingItemTabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+        shoppingItemTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                when(tab?.position) {
+                when (tab?.position) {
                     0 -> setItemsVisible()
                     1 -> setFruitsAndVegetablesVisible()
                 }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-               // not needed
+                // not needed
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
@@ -62,14 +69,21 @@ class ShoppingListFragment:
         viewModel?.items?.observe(viewLifecycleOwner, {
             itemsListRcv.apply {
                 adapter = ItemsAdapter(it, requireContext(), this@ShoppingListFragment)
-                layoutManager = LinearLayoutManager(requireContext()).apply{ orientation = LinearLayoutManager.VERTICAL }
+                layoutManager = LinearLayoutManager(requireContext()).apply {
+                    orientation = LinearLayoutManager.VERTICAL
+                }
             }
+            itemsCounter.text = getString(R.string.item_count, it.size)
+            if (it.isNotEmpty())
+                itemsDeleteAll.enable()
+            else
+                itemsDeleteAll.disable()
         })
 
         itemsNewNameBtnCreate.disable()
         itemsNewNameEdt.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                if (p0.toString().isBlank() || viewModel?.isValidName(p0.toString())  == false )
+                if (p0.toString().isBlank() || viewModel?.isValidName(p0.toString()) == false)
                     itemsNewNameBtnCreate.disable()
                 else
                     itemsNewNameBtnCreate.enable()
@@ -106,9 +120,21 @@ class ShoppingListFragment:
         viewModel?.vegetables?.observe(viewLifecycleOwner, {
             vegetablesListRcv.apply {
                 adapter = VegetablesAdapter(it, requireContext(), this@ShoppingListFragment)
-                layoutManager = LinearLayoutManager(requireContext()).apply{ orientation = LinearLayoutManager.VERTICAL }
+                layoutManager = LinearLayoutManager(requireContext()).apply {
+                    orientation = LinearLayoutManager.VERTICAL
+                }
             }
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, viewModel?.getListString())
+            type = "text/plain"
+        }
+        startActivity(Intent.createChooser(sendIntent, null))
+        return false
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -132,8 +158,14 @@ class ShoppingListFragment:
 
     override fun addVegetable(name: String) {
         viewModel?.isValidName(name)?.let{
-            if(it)
+            if(it) {
                 viewModel?.addElement(name)
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.element_added),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 

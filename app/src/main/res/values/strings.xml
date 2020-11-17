@@ -13,4 +13,7 @@
     <string name="delete_all_message">Confermi di voler eliminare tutto?</string>
     <string name="confirm">Conferma</string>
     <string name="cancel">Annulla</string>
+    <string name="element_added">Elemento Aggiunto</string>
+    <string name="item_count">Numero di elementi: %d</string>
+    <string name="share_title">share</string>
 </resources>
