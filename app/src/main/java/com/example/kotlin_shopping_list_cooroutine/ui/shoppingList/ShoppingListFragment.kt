@@ -7,7 +7,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_shopping_list_cooroutine.R
 import com.example.kotlin_shopping_list_cooroutine.ext.disable
@@ -15,12 +14,11 @@ import com.example.kotlin_shopping_list_cooroutine.ext.enable
 import com.example.kotlin_shopping_list_cooroutine.ext.showDialog
 import com.example.kotlin_shopping_list_cooroutine.ui.BaseFragment
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.fragment_shopping_dashboard.*
 import kotlinx.android.synthetic.main.fragment_shopping_list_item.*
 import java.util.*
 
 class ShoppingListFragment:
-    BaseFragment<ShoppingListViewModel, ShoppingListFactory>(ShoppingListFactory(), ShoppingListViewModel::class.java), ItemsListener {
+    BaseFragment<ShoppingListViewModel, ShoppingListFactory>(ShoppingListFactory(), ShoppingListViewModel::class.java), ItemsListener, VegetablesListener {
 
     companion object {
         const val ID_KEY ="ID"
@@ -37,6 +35,7 @@ class ShoppingListFragment:
         viewModel?.listId?.let{
             viewModel?.getElements(it)
         }
+        viewModel?.getVegetables()
         return inflater.inflate(R.layout.fragment_shopping_list_item, container, false)
     }
 
@@ -104,6 +103,12 @@ class ShoppingListFragment:
                 }
             )
         }
+        viewModel?.vegetables?.observe(viewLifecycleOwner, {
+            vegetablesListRcv.apply {
+                adapter = VegetablesAdapter(it, requireContext(), this@ShoppingListFragment)
+                layoutManager = LinearLayoutManager(requireContext()).apply{ orientation = LinearLayoutManager.VERTICAL }
+            }
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -123,6 +128,13 @@ class ShoppingListFragment:
 
     override fun onDeleteItem(id: UUID) {
         viewModel?.delete(id)
+    }
+
+    override fun addVegetable(name: String) {
+        viewModel?.isValidName(name)?.let{
+            if(it)
+                viewModel?.addElement(name)
+        }
     }
 
 }

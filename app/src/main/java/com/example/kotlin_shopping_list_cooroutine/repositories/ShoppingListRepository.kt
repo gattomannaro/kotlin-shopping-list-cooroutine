@@ -2,6 +2,9 @@ package com.example.kotlin_shopping_list_cooroutine.repositories
 
 import com.example.kotlin_shopping_list_cooroutine.data.db.Database
 import com.example.kotlin_shopping_list_cooroutine.data.entity.ShoppingListItem
+import com.example.kotlin_shopping_list_cooroutine.data.entity.VegetablesEntity
+import com.example.kotlin_shopping_list_cooroutine.data.model.Vegetable
+import java.lang.Exception
 import java.util.*
 
 class ShoppingListRepository(
@@ -22,5 +25,9 @@ class ShoppingListRepository(
 
     suspend fun deleteAll(listId: String) {
         db.shoppingListItemDao().deleteAll(listId)
+    }
+
+    suspend fun getVegetables(month: String): List<Vegetable> {
+        return db.vegetablesDao().getVegetables(month).map { Vegetable(it.Name, it.Name_Ita, it.Months.split(";")) }
     }
 }

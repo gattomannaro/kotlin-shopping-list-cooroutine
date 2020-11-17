@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_shopping_list_cooroutine.R
-import com.example.kotlin_shopping_list_cooroutine.data.entity.ShoppingListItem
 import com.example.kotlin_shopping_list_cooroutine.data.model.ListItem
 import kotlinx.android.synthetic.main.items_adapter.view.*
 import java.util.*
@@ -23,8 +22,8 @@ class ItemsAdapter(
 
     override fun onBindViewHolder(holder: ItemsViewHolder, position: Int) {
         val item = items[position]
-        holder.itemView.itemsAdapterName.text = item.name
-        holder.itemView.itemsAdapterBtn.setOnClickListener {
+        holder.itemView.vegetablesAdapterName.text = item.name
+        holder.itemView.vegetablesAdapterBtn.setOnClickListener {
             items.remove(item)
             listener?.onDeleteItem(item.id)
             notifyDataSetChanged()

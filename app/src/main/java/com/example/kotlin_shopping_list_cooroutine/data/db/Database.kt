@@ -6,11 +6,13 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.kotlin_shopping_list_cooroutine.data.dao.ShoppingListItemDao
 import com.example.kotlin_shopping_list_cooroutine.data.dao.ShoppingListsDashboardDao
+import com.example.kotlin_shopping_list_cooroutine.data.dao.VegetablesDao
 import com.example.kotlin_shopping_list_cooroutine.data.entity.ShoppingListItem
 import com.example.kotlin_shopping_list_cooroutine.data.entity.ShoppingListsEntity
+import com.example.kotlin_shopping_list_cooroutine.data.entity.VegetablesEntity
 
 @Database(
-    entities = [ShoppingListsEntity::class, ShoppingListItem::class],
+    entities = [ShoppingListsEntity::class, ShoppingListItem::class, VegetablesEntity::class],
     version = 2,
     exportSchema = true
 )
@@ -18,6 +20,7 @@ abstract class Database : RoomDatabase() {
 
     abstract fun shoppingListsDashboardDao(): ShoppingListsDashboardDao
     abstract fun shoppingListItemDao(): ShoppingListItemDao
+    abstract fun vegetablesDao(): VegetablesDao
 
     companion object {
         @JvmField

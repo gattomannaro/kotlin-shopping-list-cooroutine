@@ -6,8 +6,10 @@
     <color name="splash_background">#4FC0E8</color>
     <color name="toolbarColor">#3490dc</color>
     <color name="white">#FFFFFF</color>
-    <color name="text_hint">#33FFFFFF</color>
+    <color name="white33">#33FFFFFF</color>
     <color name="green">#4CAF50</color>
     <color name="black">#000000</color>
-    <color name="black30">#30000000</color>
+    <color name="separatorColor">#26000000</color>
+    <color name="hintColor">#73000000</color>
+    <color name="textColor">#BF000000</color>
 </resources>
