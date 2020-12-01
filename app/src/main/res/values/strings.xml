@@ -9,8 +9,8 @@
     <string name="seasonal">Seasonal</string>
 
     <string name="items_name">Element name</string>
-    <string name="delete_all_title">Do you want to delete all elements??</string>
-    <string name="delete_all_message">Confermi di voler eliminare tutto?</string>
+    <string name="delete_all_title">Do you want to delete all elements?</string>
+    <string name="delete_all_message">Do you confirm to delete all elements?</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="element_added">Product added</string>
