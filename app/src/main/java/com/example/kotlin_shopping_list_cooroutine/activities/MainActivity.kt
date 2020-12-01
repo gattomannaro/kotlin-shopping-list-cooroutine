@@ -3,6 +3,7 @@ package com.example.kotlin_shopping_list_cooroutine.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -39,11 +40,6 @@ class MainActivity : AppCompatActivity(), IMainActivity {
         inflateNavigation()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-        return true
-    }
-
     private fun inflateNavigation() {
         navController = findNavController(R.id.nav_host_fragment)
 
@@ -68,11 +64,14 @@ class MainActivity : AppCompatActivity(), IMainActivity {
         navToolbar.visibility = visibility
     }
 
-    override fun showToolbarMenu() {
-
+    override fun showToolbarMenu(listener: (()-> Unit)) {
+        toolbarShareIcon.visibility = View.VISIBLE
+        toolbarShareIcon.setOnClickListener {
+            listener.invoke()
+        }
     }
 
     override fun hideToolbarMenu() {
-        TODO("Not yet implemented")
+        toolbarShareIcon.visibility = View.GONE
     }
 }

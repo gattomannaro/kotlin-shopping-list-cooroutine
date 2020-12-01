@@ -52,7 +52,9 @@ class ShoppingListViewModel(
     }
 
     fun delete(id: UUID) {
-        items.value?.removeIf { it.id == id }
+        val l = items.value
+        l?.removeIf { it.id == id }
+        items.value = l
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 shoppingListRepository.delete(id)

@@ -33,4 +33,16 @@ abstract class BaseFragment<T: ViewModel, R: ViewModelProvider.Factory>(
             (requireActivity() as IMainActivity).setToolbarVisibility(visibility)
         }
     }
+
+    fun hideToolbarMenu() {
+        if(requireActivity() is IMainActivity) {
+            (requireActivity() as IMainActivity).hideToolbarMenu()
+        }
+    }
+
+    fun showToolbarMenu(listener: (()-> Unit)) {
+        if(requireActivity() is IMainActivity) {
+            (requireActivity() as IMainActivity).showToolbarMenu(listener)
+        }
+    }
 }

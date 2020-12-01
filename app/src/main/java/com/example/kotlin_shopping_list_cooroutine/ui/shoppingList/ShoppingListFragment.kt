@@ -5,13 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_shopping_list_cooroutine.R
+import com.example.kotlin_shopping_list_cooroutine.ext.afterTextChanged
 import com.example.kotlin_shopping_list_cooroutine.ext.disable
 import com.example.kotlin_shopping_list_cooroutine.ext.enable
 import com.example.kotlin_shopping_list_cooroutine.ext.showDialog
@@ -66,37 +64,13 @@ class ShoppingListFragment:
 
         })
 
-        viewModel?.items?.observe(viewLifecycleOwner, {
-            itemsListRcv.apply {
-                adapter = ItemsAdapter(it, requireContext(), this@ShoppingListFragment)
-                layoutManager = LinearLayoutManager(requireContext()).apply {
-                    orientation = LinearLayoutManager.VERTICAL
-                }
-            }
-            itemsCounter.text = getString(R.string.item_count, it.size)
-            if (it.isNotEmpty())
-                itemsDeleteAll.enable()
-            else
-                itemsDeleteAll.disable()
-        })
-
         itemsNewNameBtnCreate.disable()
-        itemsNewNameEdt.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-                if (p0.toString().isBlank() || viewModel?.isValidName(p0.toString()) == false)
-                    itemsNewNameBtnCreate.disable()
-                else
-                    itemsNewNameBtnCreate.enable()
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                // not needed
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                // not needed
-            }
-        })
+        itemsNewNameEdt.afterTextChanged {
+            if (it.isBlank() || viewModel?.isValidName(it) == false)
+                itemsNewNameBtnCreate.disable()
+            else
+                itemsNewNameBtnCreate.enable()
+        }
 
         itemsNewNameBtnCreate.setOnClickListener {
             viewModel?.addElement(itemsNewNameEdt.text.toString().capitalize(Locale.ROOT))
@@ -117,6 +91,24 @@ class ShoppingListFragment:
                 }
             )
         }
+
+        attachObserver()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setToolbarTitle(getString(R.string.list_item_title))
+        showToolbarMenu {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, viewModel?.getListString())
+                type = "text/plain"
+            }
+            startActivity(Intent.createChooser(sendIntent, null))
+        }
+    }
+
+    private fun attachObserver() {
         viewModel?.vegetables?.observe(viewLifecycleOwner, {
             vegetablesListRcv.apply {
                 adapter = VegetablesAdapter(it, requireContext(), this@ShoppingListFragment)
@@ -125,21 +117,21 @@ class ShoppingListFragment:
                 }
             }
         })
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, viewModel?.getListString())
-            type = "text/plain"
-        }
-        startActivity(Intent.createChooser(sendIntent, null))
-        return false
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        setToolbarTitle(getString(R.string.list_item_title))
+        viewModel?.items?.observe(viewLifecycleOwner, {
+            itemsListRcv.apply {
+                adapter = ItemsAdapter(it, requireContext(), this@ShoppingListFragment)
+                layoutManager = LinearLayoutManager(requireContext()).apply {
+                    orientation = LinearLayoutManager.VERTICAL
+                }
+            }
+            itemsCounter.text = getString(R.string.item_count, it.size)
+            if (it.isNotEmpty())
+                itemsDeleteAll.enable()
+            else
+                itemsDeleteAll.disable()
+        })
     }
 
     private fun setItemsVisible() {

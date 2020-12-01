@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin_shopping_list_cooroutine.R
+import com.example.kotlin_shopping_list_cooroutine.ext.afterTextChanged
 import com.example.kotlin_shopping_list_cooroutine.ext.disable
 import com.example.kotlin_shopping_list_cooroutine.ext.enable
 import com.example.kotlin_shopping_list_cooroutine.ext.showDialog
@@ -39,22 +40,12 @@ class ShoppingListDashboardFragment :
         viewModel?.getLists()
 
         shoppingListDashBtnCreate.disable()
-        shoppingListDashNewNameEdt.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-                if (p0.toString().isBlank() || viewModel?.isValidName(p0.toString()) == false)
-                    shoppingListDashBtnCreate.disable()
-                else
-                    shoppingListDashBtnCreate.enable()
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                // not needed
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                // not needed
-            }
-        })
+        shoppingListDashNewNameEdt.afterTextChanged {
+            if (it.isBlank() || viewModel?.isValidName(it) == false)
+                shoppingListDashBtnCreate.disable()
+            else
+                shoppingListDashBtnCreate.enable()
+        }
 
         shoppingListDashBtnCreate.setOnClickListener {
             viewModel?.createList(
@@ -85,6 +76,7 @@ class ShoppingListDashboardFragment :
         super.onActivityCreated(savedInstanceState)
         setToolbarVisibility(View.VISIBLE)
         setToolbarTitle(getString(R.string.ShoppingListDashboardFragment_title))
+        hideToolbarMenu()
     }
 
     override fun delete(id: UUID) {
