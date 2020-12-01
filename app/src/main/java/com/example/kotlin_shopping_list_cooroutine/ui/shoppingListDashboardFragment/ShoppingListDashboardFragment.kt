@@ -2,8 +2,6 @@ package com.example.kotlin_shopping_list_cooroutine.ui.shoppingListDashboardFrag
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

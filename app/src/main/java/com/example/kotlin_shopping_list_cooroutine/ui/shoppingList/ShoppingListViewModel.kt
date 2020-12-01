@@ -78,7 +78,7 @@ class ShoppingListViewModel(
     fun getVegetables() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val currentMonth = SimpleDateFormat("MMMM", Locale.getDefault()).format(Date())
+                val currentMonth = SimpleDateFormat("MMMM", Locale.ENGLISH).format(Date())
                 vegetables.postValue(shoppingListRepository.getVegetables("%$currentMonth%"))
             } catch (e: Exception) {
                 Log.e("ShoppingListViewModel#getVegetables", e.message ?: "")
