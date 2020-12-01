@@ -1,19 +1,19 @@
 <resources>
     <string name="app_name">Shopping List</string>
     <string name="splashTitle">Splash</string>
-    <string name="ShoppingListDashboardFragment_title">Liste</string>
-    <string name="list_name">Nome Lista</string>
-    <string name="delete_all">Elimina tutti</string>
-    <string name="list_item_title">List dei prodotti</string>
-    <string name="list_products">List prodotti</string>
-    <string name="seasonal">Stagionali</string>
+    <string name="ShoppingListDashboardFragment_title">Lists</string>
+    <string name="list_name">List\'s name</string>
+    <string name="delete_all">Delete all</string>
+    <string name="list_item_title">Products list</string>
+    <string name="list_products">Products list</string>
+    <string name="seasonal">Seasonal</string>
 
-    <string name="items_name">Nome elemento</string>
-    <string name="delete_all_title">Vuoi cancellare tutto?</string>
+    <string name="items_name">Element name</string>
+    <string name="delete_all_title">Do you want to delete all elements??</string>
     <string name="delete_all_message">Confermi di voler eliminare tutto?</string>
-    <string name="confirm">Conferma</string>
-    <string name="cancel">Annulla</string>
-    <string name="element_added">Elemento Aggiunto</string>
-    <string name="item_count">Numero di elementi: %d</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="element_added">Product added</string>
+    <string name="item_count">Products number: %d</string>
     <string name="share_title">share</string>
 </resources>
