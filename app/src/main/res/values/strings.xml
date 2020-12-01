@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">kotlin-shopping-list-cooroutine</string>
+    <string name="app_name">Shopping List</string>
     <string name="splashTitle">Splash</string>
     <string name="ShoppingListDashboardFragment_title">Liste</string>
     <string name="list_name">Nome Lista</string>
