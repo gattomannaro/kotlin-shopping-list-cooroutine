@@ -37,7 +37,8 @@ class MainActivity : AppCompatActivity(), IMainActivity {
 
     override fun onStart() {
         super.onStart()
-        inflateNavigation()
+        if(navController == null)
+            inflateNavigation()
     }
 
     private fun inflateNavigation() {
